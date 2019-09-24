@@ -21,4 +21,15 @@ WORKDIR KataGo/cpp
 RUN /workspace/cmake-3.15.3-Linux-x86_64/bin/cmake . -DBUILD_MCTS=1 -DUSE_BACKEND=CUDA
 RUN make
 
+# Runtime image
+FROM nvidia/cuda:10.0-cudnn7-runtime
+
+RUN apt-get update
+RUN apt-get -y install zlib1g-dev libzip-dev libboost-filesystem-dev
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY --from=0 /workspace/KataGo/cpp/katago .
+
 ENTRYPOINT [ "./katago" ]
