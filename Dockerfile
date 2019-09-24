@@ -24,6 +24,9 @@ RUN make
 # Runtime image
 FROM nvidia/cuda:10.0-cudnn7-runtime
 
+RUN apt-get update
+RUN apt-get -y install zlib1g-dev libzip-dev libboost-filesystem-dev
+
 RUN mkdir /app
 WORKDIR /app
 
